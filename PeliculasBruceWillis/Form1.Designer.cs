@@ -29,13 +29,36 @@ namespace PeliculasBruceWillis
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.dataGridViewDetallePeliculas = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDetallePeliculas)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // dataGridViewDetallePeliculas
+            // 
+            this.dataGridViewDetallePeliculas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewDetallePeliculas.Location = new System.Drawing.Point(325, 38);
+            this.dataGridViewDetallePeliculas.Name = "dataGridViewDetallePeliculas";
+            this.dataGridViewDetallePeliculas.Size = new System.Drawing.Size(347, 258);
+            this.dataGridViewDetallePeliculas.TabIndex = 0;
+            this.dataGridViewDetallePeliculas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dataGridViewDetallePeliculas);
+            this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDetallePeliculas)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridView dataGridViewDetallePeliculas;
     }
 }
 
