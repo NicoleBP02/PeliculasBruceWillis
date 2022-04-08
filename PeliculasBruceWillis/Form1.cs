@@ -63,14 +63,21 @@ namespace PeliculasBruceWillis
                         dtpFecha.Value.ToString("dd/MM/yyyy")                   //Fecha
 
                     );
+                    if(txtTitulo.Text != "" && txtNombrePersonaje.Text != "" && txtDirector.Text != "")
+                    {
+                        AccesoDatos.GuardarPelicula(unaPelicula);
 
-                    AccesoDatos.GuardarPelicula(unaPelicula);
+                        //Despues de agregado a la lista, se actualiza las visualizaciones de datos
+                        InicializaVisualizacionDatos();
 
-                    //Despues de agregado a la lista, se actualiza las visualizaciones de datos
-                    InicializaVisualizacionDatos();
-
-                    MessageBox.Show("Pelicula registrada exitosamente.",
-                        "Registro exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Pelicula registrada exitosamente.",
+                            "Registro exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Los valores no deben estar nulos\n");
+                    }
+                    
                 }
                 catch (NullReferenceException errorNulo)
                 {
