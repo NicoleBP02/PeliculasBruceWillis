@@ -66,27 +66,27 @@ namespace PeliculasBruceWillis
             }
         }
 
-        public static int ObtieneIdPelicula(string nombreRegion)
-        {
-            int resultado = 0;
-            string cadenaConexion = ObtenerCadenaConexion("PeliculasBruceWillis");
+        //public static int ObtieneIdPelicula(string nombreRegion)
+        //{
+        //    int resultado = 0;
+        //    string cadenaConexion = ObtenerCadenaConexion("PeliculasBruceWillis");
 
-            using (IDbConnection cxnDB = new SQLiteConnection(cadenaConexion))
-            {
-                string sentenciaSQL = "select Id from peliculas where titulo = @nombre";
+        //    using (IDbConnection cxnDB = new SQLiteConnection(cadenaConexion))
+        //    {
+        //        string sentenciaSQL = "select Id from peliculas where titulo = @nombre";
 
-                //El Id se asigna como parametro de la sentencia, 
-                DynamicParameters parametrosSentencia = new DynamicParameters();
-                parametrosSentencia.Add("@nombre", nombreRegion, DbType.String, ParameterDirection.Input);
+        //        //El Id se asigna como parametro de la sentencia, 
+        //        DynamicParameters parametrosSentencia = new DynamicParameters();
+        //        parametrosSentencia.Add("@nombre", nombreRegion, DbType.String, ParameterDirection.Input);
 
-                var salida = cxnDB.Query<int>(sentenciaSQL, parametrosSentencia);
+        //        var salida = cxnDB.Query<int>(sentenciaSQL, parametrosSentencia);
 
-                //validamos cuantos registros devuelve la lista
-                if (salida.ToArray().Length != 0)
-                    resultado = salida.First();
-            }
-            return resultado;
-        }
+        //        //validamos cuantos registros devuelve la lista
+        //        if (salida.ToArray().Length != 0)
+        //            resultado = salida.First();
+        //    }
+        //    return resultado;
+        //}
 
         public static void GuardarPelicula(Pelicula unaPelicula)
         {
@@ -140,6 +140,31 @@ namespace PeliculasBruceWillis
             return resultado;
         }
 
+        public static bool EncontrarID(int idPelicula)
+        {
+            bool resultado = false;
+            int totalRegistros = 0;
+
+            string cadenaConexion = ObtenerCadenaConexion("PeliculasBruceWillis");
+
+            using (IDbConnection cxnDB = new SQLiteConnection(cadenaConexion))
+            {
+
+                // se define la sentencia SQL a utilizar, pero sin concatenar el id
+                string sentenciaSQL = "select id from peliculas where id = @id";
+
+                //El Id se asigna como parametro de la sentencia, 
+                DynamicParameters parametrosSentencia = new DynamicParameters();
+                parametrosSentencia.Add("@id", idPelicula, DbType.Int32, ParameterDirection.Input);
+
+                totalRegistros = cxnDB.Execute(sentenciaSQL, parametrosSentencia);
+
+                // Si la cantidad de registros es diferente de 0, se encontró y eliminó registro
+                if (totalRegistros != 0)
+                    resultado = true;
+            }
+            return resultado;
+        }
         public static void ActualizarPelicula(Pelicula unaPelicula)
         {
             string cadenaConexion = ObtenerCadenaConexion("PeliculasBruceWillis");

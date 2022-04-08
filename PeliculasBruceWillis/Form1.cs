@@ -100,22 +100,24 @@ namespace PeliculasBruceWillis
                 {
                     int idPelicula = int.Parse(txtIdPeliculasEditar.Text);
                     Pelicula peliculaBuscada = AccesoDatos.ObtenerPeliculaxID(idPelicula);
-
-                    // Si el Sismo viene con el valor predeterminado, no se encontró registro
-                    // de lo contrario, vendrá con un valor de id diferente de cero
-                    if (peliculaBuscada.Id != null)
+                    if (peliculaBuscada.Id != 0)
                     {
-                        grupoEditarPelicula.Visible = true;
+                        bool respuesta = AccesoDatos.EncontrarID(idPelicula);
+                        if (respuesta)
+                        {
+                            grupoEditarPelicula.Visible = true;
 
 
-                        txtTituloEditar.Text = peliculaBuscada.titulo.ToString();
-                        txtNombrePersonajeEditar.Text = peliculaBuscada.nombrePersonaje.ToString();
-                        dtpFechaEditar.Value = ObtieneFechaHora(peliculaBuscada.fechaEstreno, "fecha");
-                        txtDirectorEditar.Text = peliculaBuscada.directorPelicula.ToString();
-                
+                            txtTituloEditar.Text = peliculaBuscada.titulo.ToString();
+                            txtNombrePersonajeEditar.Text = peliculaBuscada.nombrePersonaje.ToString();
+                            dtpFechaEditar.Value = ObtieneFechaHora(peliculaBuscada.fechaEstreno, "fecha");
+                            txtDirectorEditar.Text = peliculaBuscada.directorPelicula.ToString();
 
-                        // Bloqueamos el campo de Id Sismo para evitar ediciones no controladas
-                        txtIdPeliculasEditar.Enabled = false;
+
+                            // Bloqueamos el campo de Id Sismo para evitar ediciones no controladas
+                            txtIdPeliculasEditar.Enabled = false;
+                        }
+                        
                     }
                     else
                     {
@@ -124,6 +126,7 @@ namespace PeliculasBruceWillis
 
                         txtIdPeliculasEditar.Text = "";
                     }
+
                 }
                 catch (FormatException error)
                 {
