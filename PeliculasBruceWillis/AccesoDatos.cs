@@ -66,28 +66,6 @@ namespace PeliculasBruceWillis
             }
         }
 
-        //public static int ObtieneIdPelicula(string nombreRegion)
-        //{
-        //    int resultado = 0;
-        //    string cadenaConexion = ObtenerCadenaConexion("PeliculasBruceWillis");
-
-        //    using (IDbConnection cxnDB = new SQLiteConnection(cadenaConexion))
-        //    {
-        //        string sentenciaSQL = "select Id from peliculas where titulo = @nombre";
-
-        //        //El Id se asigna como parametro de la sentencia, 
-        //        DynamicParameters parametrosSentencia = new DynamicParameters();
-        //        parametrosSentencia.Add("@nombre", nombreRegion, DbType.String, ParameterDirection.Input);
-
-        //        var salida = cxnDB.Query<int>(sentenciaSQL, parametrosSentencia);
-
-        //        //validamos cuantos registros devuelve la lista
-        //        if (salida.ToArray().Length != 0)
-        //            resultado = salida.First();
-        //    }
-        //    return resultado;
-        //}
-
         public static void GuardarPelicula(Pelicula unaPelicula)
         {
             string cadenaConexion = ObtenerCadenaConexion("PeliculasBruceWillis");
@@ -98,15 +76,6 @@ namespace PeliculasBruceWillis
                 cxnDB.Execute("insert into peliculas (titulo,nombrePersonaje,fechaEstreno,directorPelicula) " +
                     "values (@titulo, @nombrePersonaje, @fechaEstreno, @directorPelicula)", unaPelicula);
 
-               /* SQLiteCommand command = new SQLiteCommand("insert into peliculas (titulo, nombrePersonaje, fechaEstreno, director) values (@titulo, @nombrePersonaje, @fechaEstreno, @director)", cxnDB);
-
-                command.Parameters.AddWithValue("@id", br.engWord + br.spaWord + br.frequency + br.wordClass);
-                command.Parameters.AddWithValue("@engWord", br.engWord);
-                command.Parameters.AddWithValue("@spaWord", br.spaWord);
-                command.Parameters.AddWithValue("@frequency", br.frequency);
-                command.Parameters.AddWithValue("@wordClass", br.wordClass);
-
-                command.ExecuteNonQuery();*/
             }
         }
 

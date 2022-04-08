@@ -86,11 +86,7 @@ namespace PeliculasBruceWillis
                         "Error en datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            /*else
-            {         
-                MessageBox.Show("Los campos de titulo, nombre del personaje, fecha o nombre del director no pueden ser nulos",
-                "Error en datos - nulos", MessageBoxButtons.OK, MessageBoxIcon.Error);      
-            }*/
+
 
             //Reiniciamos los controles para registrar un nuevo valor
             dtpFecha.Value = DateTime.Now;
@@ -255,7 +251,6 @@ namespace PeliculasBruceWillis
 
             if (tipo == "fecha")
             {
-                //MessageBox.Show("La fecha es: " + dato);
                 elementos = dato.Split('/');
                 resultado = new DateTime(int.Parse(elementos[2]),
                                             int.Parse(elementos[1]),
