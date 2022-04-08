@@ -46,7 +46,7 @@ namespace PeliculasBruceWillis
             this.btnActualizarPelicula = new System.Windows.Forms.Button();
             this.txtDirectorEditar = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaEditar = new System.Windows.Forms.DateTimePicker();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.txtNombrePersonajeEditar = new System.Windows.Forms.TextBox();
@@ -166,9 +166,11 @@ namespace PeliculasBruceWillis
             // 
             // dtpFecha
             // 
+            this.dtpFecha.CustomFormat = "dd/MM/yyyy";
+            this.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpFecha.Location = new System.Drawing.Point(15, 174);
             this.dtpFecha.Name = "dtpFecha";
-            this.dtpFecha.Size = new System.Drawing.Size(200, 20);
+            this.dtpFecha.Size = new System.Drawing.Size(108, 20);
             this.dtpFecha.TabIndex = 4;
             // 
             // txtDirector
@@ -204,7 +206,7 @@ namespace PeliculasBruceWillis
             this.grupoEditarPelicula.Controls.Add(this.btnActualizarPelicula);
             this.grupoEditarPelicula.Controls.Add(this.txtDirectorEditar);
             this.grupoEditarPelicula.Controls.Add(this.label9);
-            this.grupoEditarPelicula.Controls.Add(this.dateTimePicker1);
+            this.grupoEditarPelicula.Controls.Add(this.dtpFechaEditar);
             this.grupoEditarPelicula.Controls.Add(this.label8);
             this.grupoEditarPelicula.Controls.Add(this.label7);
             this.grupoEditarPelicula.Controls.Add(this.txtNombrePersonajeEditar);
@@ -216,6 +218,7 @@ namespace PeliculasBruceWillis
             this.grupoEditarPelicula.TabIndex = 3;
             this.grupoEditarPelicula.TabStop = false;
             this.grupoEditarPelicula.Text = "Editar Pelicula";
+            this.grupoEditarPelicula.Visible = false;
             // 
             // btnActualizarPelicula
             // 
@@ -225,6 +228,7 @@ namespace PeliculasBruceWillis
             this.btnActualizarPelicula.TabIndex = 9;
             this.btnActualizarPelicula.Text = "Actualizar";
             this.btnActualizarPelicula.UseVisualStyleBackColor = true;
+            this.btnActualizarPelicula.Click += new System.EventHandler(this.btnActualizarPelicula_Click);
             // 
             // txtDirectorEditar
             // 
@@ -242,12 +246,14 @@ namespace PeliculasBruceWillis
             this.label9.TabIndex = 7;
             this.label9.Text = "Director";
             // 
-            // dateTimePicker1
+            // dtpFechaEditar
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(26, 110);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 6;
+            this.dtpFechaEditar.CustomFormat = "dd/MM/yyyy";
+            this.dtpFechaEditar.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpFechaEditar.Location = new System.Drawing.Point(26, 110);
+            this.dtpFechaEditar.Name = "dtpFechaEditar";
+            this.dtpFechaEditar.Size = new System.Drawing.Size(115, 20);
+            this.dtpFechaEditar.TabIndex = 6;
             // 
             // label8
             // 
@@ -433,7 +439,7 @@ namespace PeliculasBruceWillis
         private System.Windows.Forms.TextBox txtNombrePersonaje;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox grupoEditarPelicula;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpFechaEditar;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtNombrePersonajeEditar;

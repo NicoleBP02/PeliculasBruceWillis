@@ -15,7 +15,7 @@ namespace PeliculasBruceWillis
         public string titulo { get; set; }
         public string nombrePersonaje { get; set; }
         public string directorPelicula { get; set; }
-        public string Fecha { get; set; }
+        public string fechaEstreno { get; set; }
 
         /// <summary>
         /// Constructor de la clase usando parámetros
@@ -25,13 +25,13 @@ namespace PeliculasBruceWillis
         /// <param name="directorpelicula"></param>
         /// <param name="fecha"></param>
 
-        public Pelicula(string titulo, string nombrepersonaje, string directorpelicula, string fecha)
+        public Pelicula(string titulo, string nombrepersonaje, string directorpelicula, string fechaestreno)
         {
             Id = 0;
             this.titulo = titulo;
             nombrePersonaje = nombrepersonaje;
             directorPelicula = directorpelicula;
-            Fecha = fecha;
+            fechaEstreno = fechaestreno;
         }
         /// <summary>
         /// Constructor predeterminado de la clase
@@ -42,7 +42,7 @@ namespace PeliculasBruceWillis
             this.titulo = "";
             nombrePersonaje = "";
             directorPelicula = "";
-            Fecha = "";
+            fechaEstreno = "";
         }
         /// <summary>
         /// Obtiene la cadena de caracteres que describe el sismo
@@ -54,7 +54,7 @@ namespace PeliculasBruceWillis
                 $"Id: {Id} " + Environment.NewLine +
                 $"titulo: {titulo} " + Environment.NewLine +
                 $"Nombre Personaje: {nombrePersonaje} " + Environment.NewLine +
-                $"Fecha: {Fecha} " + Environment.NewLine +
+                $"Fecha: {fechaEstreno} " + Environment.NewLine +
                 $"directorPelicula: {directorPelicula} "
                 );
         }

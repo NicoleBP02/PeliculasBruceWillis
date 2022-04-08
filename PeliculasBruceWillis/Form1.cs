@@ -19,18 +19,9 @@ namespace PeliculasBruceWillis
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ActualizaComboBoxPeliculas();
             InicializaVisualizacionDatos();
         }
 
-        private void ActualizaComboBoxPeliculas()
-        {
-            /*
-            comboAgregarPelicula.DataSource = null;
-            comboAgregarPelicula.DataSource = AccesoDatos.ObtenerPelicula();
-            comboAgregarPelicula.DisplayMember = "region";
-            */
-        }
         private void InicializaVisualizacionDatos()
         {
             InicializaDataGridViewDetallePeliculas();
@@ -70,7 +61,7 @@ namespace PeliculasBruceWillis
                         txtNombrePersonaje.Text,                                //Personaje
                         txtDirector.Text,                                       //Director
                         dtpFecha.Value.ToString("dd/MM/yyyy")                   //Fecha
-                        
+
                     );
 
                     AccesoDatos.GuardarPelicula(unaPelicula);
@@ -102,7 +93,54 @@ namespace PeliculasBruceWillis
         }
 
         //botonBuscarPelicula_Click
-        private void button1_Click(object sender, EventArgs e) {}
+        private void button1_Click(object sender, EventArgs e) {
+            if (txtIdPeliculasEditar.Text != "")
+            {
+                try
+                {
+                    int idPelicula = int.Parse(txtIdPeliculasEditar.Text);
+                    Pelicula peliculaBuscada = AccesoDatos.ObtenerPeliculaxID(idPelicula);
+
+                    // Si el Sismo viene con el valor predeterminado, no se encontró registro
+                    // de lo contrario, vendrá con un valor de id diferente de cero
+                    if (peliculaBuscada.Id != null)
+                    {
+                        grupoEditarPelicula.Visible = true;
+
+
+                        txtTituloEditar.Text = peliculaBuscada.titulo.ToString();
+                        txtNombrePersonajeEditar.Text = peliculaBuscada.nombrePersonaje.ToString();
+                        dtpFechaEditar.Value = ObtieneFechaHora(peliculaBuscada.fechaEstreno, "fecha");
+                        txtDirectorEditar.Text = peliculaBuscada.directorPelicula.ToString();
+                
+
+                        // Bloqueamos el campo de Id Sismo para evitar ediciones no controladas
+                        txtIdPeliculasEditar.Enabled = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se encontró una pelicula asociado al id suministrado.",
+                            "Registro no encontrado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        txtIdPeliculasEditar.Text = "";
+                    }
+                }
+                catch (FormatException error)
+                {
+                    MessageBox.Show("El Id de la pelicula debe ser un valor numérico entero \n" +
+                        error.Message,
+                        "Error en datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    txtIdPeliculasEditar.Text = "";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor ingrese el ID de la pelicula a editar",
+                    "Id de Sismo no suministrado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
 
         private void btnBorrarPelicula_Click(object sender, EventArgs e)
         {
@@ -144,6 +182,77 @@ namespace PeliculasBruceWillis
                     "Id de pelicula no suministrado", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+
+        private void btnActualizarPelicula_Click(object sender, EventArgs e)
+        {
+            int idRegion = 0;
+
+            //Validamos que los campos de Latidud, Longitud, Magnitud, Profundidad y Región no sean nulos
+            if (ValidaCamposMinimos())
+            {
+                try
+                {
+                    Pelicula unaPelicula = new Pelicula(
+                    txtTituloEditar.Text,                                         //Titulo
+                    txtNombrePersonajeEditar.Text,                                //Personaje
+                    txtDirectorEditar.Text,                                       //Director
+                    dtpFechaEditar.Value.ToString("dd/MM/yyyy")                   //Fecha
+
+                    );
+
+                    unaPelicula.Id = int.Parse(txtIdPeliculasEditar.Text);
+
+    
+                    AccesoDatos.ActualizarPelicula(unaPelicula);
+
+                    //Despues de agregado a la lista, se actualiza las visualizaciones de datos
+                    InicializaVisualizacionDatos();
+
+                    MessageBox.Show("Pelicula actualizada exitosamente.",
+                        "Registro exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (FormatException error)
+                {
+                    MessageBox.Show("Los campos de  deben ser numéricos \n" +
+                        error.Message,
+                        "Error en datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (NullReferenceException errorNulo)
+                {
+                    MessageBox.Show("El valor de ... no debe ser nulo\n" +
+                        errorNulo.Message,
+                        "Error en datos - Región", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Los campos de ... no pueden ser nulos",
+                    "Error en datos - nulos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            //Ocultamos el grupo de controles de edición
+            grupoEditarPelicula.Visible = false;
+
+            txtIdPeliculasEditar.Text = "";
+            txtIdPeliculasEditar.Enabled = true;
+        }
+
+        private DateTime ObtieneFechaHora(string dato, string tipo)
+        {
+            DateTime resultado = new DateTime();
+            string[] elementos;
+
+            if (tipo == "fecha")
+            {
+                //MessageBox.Show("La fecha es: " + dato);
+                elementos = dato.Split('/');
+                resultado = new DateTime(int.Parse(elementos[2]),
+                                            int.Parse(elementos[1]),
+                                            int.Parse(elementos[0]));
+            }
+
+            return resultado;
         }
     }
 }

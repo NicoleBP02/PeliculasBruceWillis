@@ -26,6 +26,32 @@ namespace PeliculasBruceWillis
                 return salida.ToList();
             }
         }
+
+        public static Pelicula ObtenerPeliculaxID(int idPelicula)
+        {
+            Pelicula peliculaResultado = new Pelicula();
+
+            string cadenaConexion = ObtenerCadenaConexion("PeliculasBruceWillis");
+
+            using (IDbConnection cxnDB = new SQLiteConnection(cadenaConexion))
+            {
+
+                // se define la sentencia SQL a utilizar, pero sin concatenar el id
+                string sentenciaSQL = "select Id, titulo, nombrePersonaje, fechaEstreno, directorPelicula from peliculas where Id = @id";
+
+                //El Id se asigna como parametro de la sentencia, 
+                DynamicParameters parametrosSentencia = new DynamicParameters();
+                parametrosSentencia.Add("@id", idPelicula, DbType.Int32, ParameterDirection.Input);
+
+                var salida = cxnDB.Query<Pelicula>(sentenciaSQL, parametrosSentencia);
+
+                //validamos cuantos registros devuelve la lista
+                if (salida.ToArray().Length != 0)
+                    peliculaResultado = salida.First();
+
+                return peliculaResultado;
+            }
+        }
         public static DataTable ObtenerDetallePelicula()
         {
             DataTable tablaResultado = new DataTable();
@@ -112,6 +138,21 @@ namespace PeliculasBruceWillis
                     resultado = true;
             }
             return resultado;
+        }
+
+        public static void ActualizarPelicula(Pelicula unaPelicula)
+        {
+            string cadenaConexion = ObtenerCadenaConexion("PeliculasBruceWillis");
+
+            using (IDbConnection cxnDB = new SQLiteConnection(cadenaConexion))
+            {
+                cxnDB.Execute("update peliculas set " +
+                    "titulo = @titulo," +
+                    "nombrepersonaje = @nombrePersonaje," +
+                    "fechaestreno = @fechaEstreno," +
+                    "directorpelicula = @directorPelicula " +
+                    "where Id = @Id", unaPelicula);
+            }
         }
     }
 }
